@@ -1,12 +1,19 @@
 const arr=['hello', 'world', 'Kiev', 'Kharkiv', 'Odessa', 'Lviv'];
 
-function list(arr){
+function list(arr, append = document.body){
+    const listul=document.createElement("ul");
 
-    let listt = arr.map(el => `<li>${el}</li>`)
-    listt = `<ul>${listt.join("")}</ul>`
-    document.body.innerHTML +=listt
+    arr.map(el=>{
+        if(typeof el === "object"){
+            list(el, listul);
+            return;
+        }
+        const listel=document.createElement('li');
+        listel.innerText=el;
+        listul.appendChild(listel);
+    });
+    append.appendChild(listul)
 }
-
 
 list(arr)
 
@@ -17,9 +24,7 @@ let t = setInterval (function ()
     let o = document.getElementById ('timer'), s = o.innerHTML;
     s--;
     if (s < 1) {
-        sec.remove()
-        timer.remove()
-        list.remove()
+        document.body.remove()
     }
     o.innerHTML = f(s);
 }, 1000);
